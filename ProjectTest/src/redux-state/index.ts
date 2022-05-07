@@ -7,7 +7,8 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
+  REGISTER,
+  persistStore
 } from "redux-persist";
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -30,5 +31,6 @@ const makeStore = () => store
 export type AppState = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<typeof store.getState>
 export const wrapper = createWrapper<AppState>(makeStore);
+export const persistor = persistStore(store);
 
 export default store;

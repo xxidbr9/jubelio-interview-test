@@ -2,6 +2,8 @@ import { ActionRedux } from '@utils/types/redux'
 import { ScreenType } from '@utils/types/screen'
 import { HYDRATE } from 'next-redux-wrapper'
 import actionTypes, { ScreenConstantsTypes } from './screen.constant'
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
 export type ScreenStateType = {
   screen_type?: ScreenType
@@ -25,3 +27,10 @@ function reducer(
 }
 
 export default reducer
+
+// redux persist
+const screenPersistConfig = {
+  storage,
+  key: "screen"
+};
+export const screenPersistReducer = persistReducer(screenPersistConfig, reducer)

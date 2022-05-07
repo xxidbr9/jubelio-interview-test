@@ -15,6 +15,7 @@ module.exports = function (api) {
             '@assets/css': './src/assets/css',
             '@assets/scss': './src/assets/scss',
             '@assets/svg': './src/assets/svg',
+            '@domain': './src/domain',
             '@components/atoms': './src/components/atoms',
             '@components/molecules': './src/components/molecules',
             '@components/organisms': './src/components/organisms',

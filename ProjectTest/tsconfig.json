@@ -22,6 +22,7 @@
       "@assets/scss/*": ["./src/assets/scss/*"],
       "@assets/svg/*": ["./src/assets/svg/*"],
       "@assets/*": ["./src/assets/*"],
+      "@domain/*": ["./src/domain/*"],
       "@atoms/*": ["./src/components/atoms/*"],
       "@molecules/*": ["./src/components/molecules/*"],
       "@organisms/*": ["./src/components/organisms/*"],

@@ -24,11 +24,14 @@ import moment from 'moment'
 import 'moment/locale/id'
 import NProgress from 'nextjs-progressbar'
 import { persistStore } from 'redux-persist'
-import { wrapper } from '@redux-state/index'
+import { persistor, wrapper } from '@redux-state/index'
 import Meta from '@atoms/Meta'
 import { breakScreen } from '@styles/breakpoint'
 import colors from '@styles/colors'
 import gridConfig from '@configs/grid.config'
+import { screenAction } from '@rdxFeatures/screen'
+import { ScreenType } from '@utils/types/screen'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 
@@ -47,18 +50,18 @@ const MainApp = ({ Component, pageProps }) => {
   const store = useStore()
 
   // not used
-  const persistor = persistStore(store, {}, function () {
-    persistor.persist()
-  })
+  // const persistor = persistStore(store, {}, function () {
+  //   persistor.persist()
+  // })
 
   const dispatch = useDispatch()
 
 
   const screen = useScreen()
 
-  // useEffect(() => {
-  //   dispatch(setScreenSize(screen as ScreenType))
-  // }, [screen, dispatch])
+  useEffect(() => {
+    dispatch(screenAction.setScreenSize(screen as ScreenType))
+  }, [screen, dispatch])
 
 
   return (
@@ -71,7 +74,12 @@ const MainApp = ({ Component, pageProps }) => {
       <Meta />
       <NProgress color={colors?.['red'][500] as string} />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        {typeof window !== "undefined" ? (
+          <PersistGate persistor={persistor} loading={<Component {...pageProps} />}>
+            <Component {...pageProps} />
+          </PersistGate>
+        ) :
+          <Component {...pageProps} />}
       </ThemeProvider>
     </NextTheme>
   )
