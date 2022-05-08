@@ -64,7 +64,7 @@ const MainApp = ({ Component, pageProps }) => {
       disableTransitionOnChange
     >
       <Meta />
-      <NProgress color={colors?.['red'][500] as string} />
+      <NProgress color={colors?.['red'][500] as string} options={{ showSpinner: false }} />
       <ThemeProvider theme={theme}>
         {typeof window !== "undefined" ? (
           <PersistGate persistor={persistor} loading={<Loader />}>

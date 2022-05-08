@@ -20,3 +20,6 @@ export const getAllProductWithCartQuantity = createSelector([rdxProductState, rd
   });
   return result
 })
+
+
+export const getDetailProducts = createSelector(rdxProductState, state => state.detailProducts)
