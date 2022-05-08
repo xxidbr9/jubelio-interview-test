@@ -19,6 +19,7 @@ type Props = {
 
 const ProductSection = (props: Props) => {
   const { products } = props
+  const otherProducts = products.map(product => ({ ...product, slug: createSlugLink(RoutesType.HOME, product.name, product.id) }))
   return (
     <main className={""}>
       <Container className='mb-4'>
@@ -43,6 +44,7 @@ const ProductSection = (props: Props) => {
                 key={product.id}
                 data={{ ...product, slug: createSlugLink(RoutesType.HOME, product.name, product.id), quantity: product.quantity }}
                 onCartClick={props.onCartClick}
+                otherProducts={otherProducts}
               />
             ))}
           </div>

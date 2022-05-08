@@ -15,6 +15,7 @@ import { screenSelector } from '@rdxFeatures/screen';
 type Props = {
   data: ProductDetailEntity
   onCartClick: () => void
+  isModal?: boolean
 }
 
 const ProductDetailSection = (props: Props) => {
@@ -42,7 +43,7 @@ const ProductDetailSection = (props: Props) => {
   }
 
   return (
-    <Container className='laptop:mb-20 mobile:mb-10'>
+    <Container className={`${props.isModal ? "" : "laptop:mb-20 mobile:mb-10"}`}>
       <div className='flex gap-x-8 laptop:flex-row mobile:flex-col'>
         {!isMobile && (
           <div className='flex gap-x-4'>

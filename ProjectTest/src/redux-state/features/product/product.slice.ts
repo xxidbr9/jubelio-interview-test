@@ -6,10 +6,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 type RdxProductState = {
   products?: ProductListEntity[]
-  detailProducts?: ProductDetailEntity[]
+  detailProduct?: ProductDetailEntity
   page?: number
   loading?: boolean
   detailLoading?: boolean
+  detailActiveIndex?: number
   error?: any
   detailError?: any
 }
@@ -18,8 +19,8 @@ const initialState: RdxProductState = {
   products: [],
   page: 0,
   loading: true,
-  detailProducts: [],
-  detailLoading: true
+  detailLoading: true,
+  detailActiveIndex: 0
 }
 
 const fetchProductList = createAsyncThunk(
@@ -65,6 +66,12 @@ const productSlice = createSlice({
         ...state,
         products: newProductList
       }
+    },
+    setDetailActiveIndex(state, action: { payload: RdxProductState, type: string }) {
+      return {
+        ...state,
+        detailActiveIndex: action.payload.detailActiveIndex
+      }
     }
   },
   extraReducers: {
@@ -93,12 +100,12 @@ const productSlice = createSlice({
     },
     [`${fetchProductDetail.fulfilled}`]: (state, action) => {
       const productPayload = action.payload.detailProduct
-      const finnedProductDetail = state.detailProducts.findIndex((prod) => prod.id === productPayload.id)
-      const newDetailsProduct = finnedProductDetail < 0 ? [...state.detailProducts, productPayload] : state.detailProducts
+      // const finnedProductDetail = state.detailProducts.findIndex((prod) => prod.id === productPayload.id)
+      // const newDetailsProduct = finnedProductDetail < 0 ? [...state.detailProducts, productPayload] : state.detailProducts
 
       return {
         ...state,
-        detailProducts: newDetailsProduct,
+        detailProduct: productPayload,
         detailLoading: false
       }
     },

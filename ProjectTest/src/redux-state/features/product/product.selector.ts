@@ -22,5 +22,8 @@ export const getAllProductWithCartQuantity = createSelector([rdxProductState, rd
 })
 
 
-export const getDetailProducts = createSelector(rdxProductState, state => state.detailProducts)
+// export const getDetailProducts = createSelector(rdxProductState, state => state.detailProducts)
+export const getDetailProduct = createSelector(rdxProductState, state => state.detailProduct)
+
 export const isDetailLoading = createSelector(rdxProductState, state => state.detailLoading)
+export const detailActiveIndex = createSelector(rdxProductState, state => state.detailActiveIndex)

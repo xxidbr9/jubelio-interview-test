@@ -14,8 +14,11 @@ import ROUTES_CONSTANT from "@constants/routes.constant"
 import ProductDetailSection from "@organisms/ProductDetailSection"
 import { rdxProductActions, rdxProductReducer, rdxProductSelector, rdxProductThunkActions } from "@rdxFeatures/product"
 import Loader from "@atoms/Loader"
+import CloseIcon from "@assets/svg/Close.icon"
+import RightIcon from "@assets/svg/RIght.svg"
+import LeftIcon from "@assets/svg/Left.svg"
 
-const ProductCard: React.FC<ProductCardProps> = ({ data: product, ...props }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ data: product, otherProducts, ...props }) => {
   const isMobile = useSelector(screenSelector.isMobile)
   const [src, setSrc] = React.useState(product.image_thumbnail);
 
@@ -23,12 +26,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, ...props }) =>
   const router = useRouter()
 
   const rdxIsDetailLoading = useSelector(rdxProductSelector.isDetailLoading)
-  const rdxProductDetail = useSelector(rdxProductSelector.getDetailProducts).find(find => find.id === product.id)
-  const isProductDetailNotExist = useSelector(rdxProductSelector.getDetailProducts).findIndex(find => find.id === product.id) < 0
+  const rdxProductDetail = useSelector(rdxProductSelector.getDetailProduct)
+  const thisProductIndex = otherProducts.findIndex(find => find.id === rdxProductDetail?.id)
 
   const IMAGE_WIDTH = useMemo(() => isMobile ? 170 : 304, [isMobile])
   const IMAGE_RATIO = 4 / 3
   const IMAGE_HEIGHT = IMAGE_WIDTH * IMAGE_RATIO
+
+  useEffect(() => {
+    console.log(rdxProductDetail)
+  }, [rdxProductDetail])
 
   let [isOpen, setIsOpen] = useState(false)
 
@@ -46,17 +53,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, ...props }) =>
     }
     window.history.pushState(product, "", product.slug)
     event.preventDefault()
-
-    if (!!isProductDetailNotExist) {
-      dispatch(rdxProductThunkActions.fetchProductDetail(product.id))
-    }
-
+    dispatch(rdxProductThunkActions.fetchProductDetail(product.id))
     setIsOpen(true)
+  }
+
+  const _handlePrevProduct = () => {
+    if (thisProductIndex > 0) {
+      const nextProduct = otherProducts[thisProductIndex - 1]
+      dispatch(rdxProductThunkActions.fetchProductDetail(nextProduct.id))
+      window.history.pushState(nextProduct, "", nextProduct.slug)
+    }
+  }
+
+  const _handleNextProduct = () => {
+    if (thisProductIndex < otherProducts.length - 1) {
+      const nextProduct = otherProducts[thisProductIndex + 1]
+      dispatch(rdxProductThunkActions.fetchProductDetail(nextProduct.id))
+      window.history.pushState(nextProduct, "", nextProduct.slug)
+    }
   }
 
   const _handleCartProductDetailClick = () => {
     props.onCartClick(product)
-    closeModal()
   }
 
   return (
@@ -95,7 +113,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, ...props }) =>
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-25">
+
+            </div>
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -110,13 +130,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, ...props }) =>
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-auto transform overflow-hidden rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all">
+
                   {rdxIsDetailLoading && <Loader />}
                   {!rdxIsDetailLoading && (
-                    <ProductDetailSection data={rdxProductDetail} onCartClick={_handleCartProductDetailClick} />
+                    <ProductDetailSection isModal data={rdxProductDetail} onCartClick={_handleCartProductDetailClick} />
                   )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
+            <button className="absolute z-50 right-8 top-8" onClick={closeModal}>
+              <CloseIcon color="#fff" className="scale-150" strokeWidth={2.5} />
+            </button>
+            <Dialog.Panel>
+              {thisProductIndex > 0 && (
+                <button className="absolute z-50 left-8 top-1/2 bg-white rounded-full p-4" onClick={_handlePrevProduct}>
+                  <LeftIcon />
+                </button>
+              )}
+              {thisProductIndex < otherProducts.length - 1 && (
+                <button className="absolute z-50 right-8 top-1/2 bg-white rounded-full p-4" onClick={_handleNextProduct}>
+                  <RightIcon />
+                </button>
+              )}
+            </Dialog.Panel>
           </div>
         </Dialog>
       </Transition>

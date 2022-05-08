@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         <Container className="flex justify-between items-center">
           <Link href={ROUTES_CONSTANT.HOME} passHref>
             <a className="flex items-center">
-              <Image src={"/images/app_icon/512.png"} height={32} width={32} />
+              <Image src={"/images/app_icon/512.png"} height={32} width={32} alt={"brand"}/>
               <span className="text-red-500"> Air Product</span>
             </a>
           </Link>

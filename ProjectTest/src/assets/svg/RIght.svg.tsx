@@ -1,7 +1,7 @@
 import * as React from "react"
 import { SVGProps } from "react"
 
-const CloseIcon = (props: SVGProps<SVGSVGElement>) => (
+const RightIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={24}
     height={24}
@@ -10,14 +10,13 @@ const CloseIcon = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      d="M18 18 6 6M18 6 6 18"
-      stroke={props.color || "#292D32"}
-      strokeWidth={props.strokeWidth || 1.5}
-      strokeMiterlimit={10}
+      d="M10 7.5s4 4 4 4.5-4 4.5-4 4.5"
+      stroke={props.color || "#222628"}
+      strokeWidth={1.4}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 )
 
-export default CloseIcon
+export default RightIcon
