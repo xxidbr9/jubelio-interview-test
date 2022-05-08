@@ -117,31 +117,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, otherProducts,
 
             </div>
           </Transition.Child>
+          <Dialog.Panel>
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <div className="w-auto transform overflow-hidden rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all">
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-auto transform overflow-hidden rounded-sm bg-white p-6 text-left align-middle shadow-xl transition-all">
-
-                  {rdxIsDetailLoading && <Loader />}
-                  {!rdxIsDetailLoading && (
-                    <ProductDetailSection isModal data={rdxProductDetail} onCartClick={_handleCartProductDetailClick} />
-                  )}
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-            <button className="absolute z-50 right-8 top-8" onClick={closeModal}>
-              <CloseIcon color="#fff" className="scale-150" strokeWidth={2.5} />
-            </button>
-            <Dialog.Panel>
+                    {rdxIsDetailLoading && <Loader />}
+                    {!rdxIsDetailLoading && (
+                      <ProductDetailSection isModal data={rdxProductDetail} onCartClick={_handleCartProductDetailClick} />
+                    )}
+                  </div>
+                </Transition.Child>
+              </div>
+              <button className="absolute z-50 right-8 top-8" onClick={closeModal}>
+                <CloseIcon color="#fff" className="scale-150" strokeWidth={2.5} />
+              </button>
               {thisProductIndex > 0 && (
                 <button className="absolute z-50 left-8 top-1/2 bg-white rounded-full p-4" onClick={_handlePrevProduct}>
                   <LeftIcon />
@@ -152,8 +151,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, otherProducts,
                   <RightIcon />
                 </button>
               )}
-            </Dialog.Panel>
-          </div>
+            </div>
+          </Dialog.Panel>
         </Dialog>
       </Transition>
     </React.Fragment>
