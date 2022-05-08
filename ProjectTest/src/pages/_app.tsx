@@ -4,6 +4,7 @@ import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import 'react-spring-bottom-sheet/dist/style.css'
+import '@assets/scss/swiper.scss'
 
 // END CSS
 import React from 'react'
@@ -19,11 +20,11 @@ import SwiperCore, {
   Scrollbar,
   A11y,
   Autoplay,
+  Thumbs,
 } from 'swiper'
 import moment from 'moment'
 import 'moment/locale/id'
 import NProgress from 'nextjs-progressbar'
-import { persistStore } from 'redux-persist'
 import { persistor, wrapper } from '@redux-state/index'
 import Meta from '@atoms/Meta'
 import { breakScreen } from '@styles/breakpoint'
@@ -37,7 +38,7 @@ import Loader from '@atoms/Loader'
 
 
 /* Configuration Start */
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay])
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay, Thumbs])
 const useScreen = createBreakpoint({ ...breakScreen } as {})
 moment.locale("id")
 /* Configuration End */

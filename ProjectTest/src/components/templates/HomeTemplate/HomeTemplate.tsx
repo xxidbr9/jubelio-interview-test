@@ -14,6 +14,7 @@ import { useEffectOnce } from "react-use"
 import { HomeTemplateProps } from "./HomeTemplate.props"
 import Navbar from "@organisms/Navbar"
 import { useRouter } from "next/router"
+import ProductSection from "@organisms/ProductSection"
 
 
 
@@ -47,6 +48,7 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
   const _handleCartClick = () => {
     if (isMobile) {
       router.push(ROUTES_CONSTANT.CART)
+      return
     }
     setIsDrawerOpen(true)
   }
@@ -54,16 +56,10 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
   const _handleCartProductClick = (product: ProductListEntity) => {
     setIsDrawerOpen(true)
     dispatch(rdxCartActions.setProductList(product))
-    // window.history.pushState({}, "", ROUTES_CONSTANT.CART)
   }
 
 
-  const _handleDrawerClose = () => {
-    setIsDrawerOpen(false)
-    // window.history.replaceState({}, "", ROUTES_CONSTANT.HOME)
-  }
-
-
+  const _handleDrawerClose = () => setIsDrawerOpen(false)
 
   const hasMore = rdxProductsState.page < 4
 
@@ -71,42 +67,7 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
   return (
     <React.Fragment>
       <Navbar drawerOpen={isDrawerOpen} onCartClick={_handleCartClick} onDrawerClose={_handleDrawerClose} />
-
-      <main className={""}>
-        <Container className='mb-4'>
-          <div className=''>
-            <h1 className='text-xl font-medium'>Shop All Product</h1>
-          </div>
-        </Container>
-
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={_handleNext}
-          hasMore={hasMore}
-          useWindow={true}
-          loader={<Loader key={0} />}
-          className="mt-4"
-
-        >
-          <Container>
-            <div className='grid desktop:grid-cols-4 laptop:grid-cols-2 tablet:grid-cols-3 tablet:gap-x-6 mobile:grid-cols-2 laptop:gap-x-6 laptop:gap-y-8 mobile:gap-y-4 mobile:gap-x-4'>
-              {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  data={{ ...product, slug: createSlugLink(RoutesType.HOME, product.name, product.id), quantity: product.quantity }}
-                  onCartClick={_handleCartProductClick}
-                />
-              ))}
-            </div>
-            {!hasMore && (
-              <div className='my-10 text-center'>
-                You reach the end, can&apos;t find what you need?
-              </div>
-            )}
-          </Container>
-        </InfiniteScroll>
-      </main>
-
+      <ProductSection hasMore={hasMore} onLoadMore={_handleNext} onCartClick={_handleCartProductClick} products={products} />
     </React.Fragment>
   )
 }

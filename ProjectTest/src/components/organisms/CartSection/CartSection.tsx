@@ -80,7 +80,7 @@ const CartSection = (props: Props) => {
         </div>
 
         <div className="px-4">
-          <Button fluid>Checkout</Button>
+          <Button fluid disabled={!rdxProductInCart.length}>Checkout</Button>
         </div>
 
         <div className="px-4">

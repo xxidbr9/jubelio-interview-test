@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Error500 = () => {
+const Error404 = () => {
   return (
     <div>Maaf Gada</div>
   )
 }
 
-export default Error500
+export default Error404

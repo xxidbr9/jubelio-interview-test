@@ -1,6 +1,7 @@
 export enum RoutesType {
   HOME = '/',
-  CART = '/cart'
+  CART = '/cart',
+  NOT_FOUND = '/oops'
 }
 
 const ROUTES_CONSTANT = {

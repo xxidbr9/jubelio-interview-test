@@ -19,7 +19,9 @@ const setting = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
 
 module.exports = setting

@@ -8,10 +8,12 @@ const StyledButton = styled.button<ButtonProps>`
   ${props => props.variant === "primary" && tw`bg-black text-white`}
   ${props => props.variant === "secondary" && tw`bg-white text-black border-2`}
   ${props => props.variant === "ternary" && tw`bg-blue-500 text-white`}
+  ${props => props.disabled && tw`bg-gray-200 text-gray-500 cursor-not-allowed`}
 `
 
 const Button: React.FC<ButtonProps & JSX.IntrinsicElements['button']> = (props) => {
-  return <StyledButton {...props} variant={props.variant || "primary"} className={"active:scale-[.98] " + props.className} />
+  const className = props.disabled ? "" : "active:scale-[.98] "
+  return <StyledButton {...props} variant={props.variant || "primary"} className={className + props.className} />
 }
 
 export default Button
