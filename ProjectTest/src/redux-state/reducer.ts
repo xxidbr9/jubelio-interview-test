@@ -1,5 +1,6 @@
-import { screenReducer, screenPersistReducer } from '@rdxFeatures/screen'
-import { rdxProductReducers } from '@rdxFeatures/product'
+import { screenReducer } from '@rdxFeatures/screen'
+import { rdxProductReducer } from '@rdxFeatures/product'
+import { rdxCartPersistReducer } from '@rdxFeatures/cart'
 // import { combineReducers } from 'redux'
 
 // const oldWayReducer = combineReducers({
@@ -8,8 +9,9 @@ import { rdxProductReducers } from '@rdxFeatures/product'
 
 const reducer = {
   screenReducer,
-  screenPersistReducer,
-  productReducer: rdxProductReducers
+  // screenPersistReducer,
+  productReducer: rdxProductReducer,
+  cartReducer: rdxCartPersistReducer
 }
 
 export default reducer

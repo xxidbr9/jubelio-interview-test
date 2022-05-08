@@ -32,6 +32,7 @@ import gridConfig from '@configs/grid.config'
 import { screenAction } from '@rdxFeatures/screen'
 import { ScreenType } from '@utils/types/screen'
 import { PersistGate } from 'redux-persist/integration/react'
+import Loader from '@atoms/Loader'
 
 
 
@@ -46,17 +47,8 @@ const MainApp = ({ Component, pageProps }) => {
     ...gridConfig,
   }
 
-  // Redux config
-  const store = useStore()
-
-  // not used
-  // const persistor = persistStore(store, {}, function () {
-  //   persistor.persist()
-  // })
 
   const dispatch = useDispatch()
-
-
   const screen = useScreen()
 
   useEffect(() => {
@@ -75,7 +67,7 @@ const MainApp = ({ Component, pageProps }) => {
       <NProgress color={colors?.['red'][500] as string} />
       <ThemeProvider theme={theme}>
         {typeof window !== "undefined" ? (
-          <PersistGate persistor={persistor} loading={<Component {...pageProps} />}>
+          <PersistGate persistor={persistor} loading={<Loader />}>
             <Component {...pageProps} />
           </PersistGate>
         ) :

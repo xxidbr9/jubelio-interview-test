@@ -67,7 +67,7 @@ const productSlice = createSlice({
 })
 
 export const rdxProductActions = productSlice.actions
-export const rdxProductReducers = productSlice.reducer
+export const rdxProductReducer = productSlice.reducer
 
 export const rdxProductThunkActions = {
   fetchProductList
