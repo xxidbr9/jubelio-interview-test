@@ -1,22 +1,15 @@
-import Container from "@atoms/Container"
-import Loader from "@atoms/Loader"
-import ROUTES_CONSTANT, { RoutesType } from "@constants/routes.constant"
+import ROUTES_CONSTANT from "@constants/routes.constant"
 import { ProductListEntity } from "@domain/product/entities/iProductList.entity"
-import { createSlugLink } from "@helpers/slugGenerator.helper"
-import ProductCard from "@molecules/Card/ProductCard"
-import { rdxCartActions, rdxCartSelector } from "@rdxFeatures/cart"
+import { rdxCartActions } from "@rdxFeatures/cart"
 import { rdxProductSelector, rdxProductThunkActions } from "@rdxFeatures/product"
 import { screenSelector } from "@rdxFeatures/screen"
-import React, { useState } from "react"
-import InfiniteScroll from "react-infinite-scroller"
+import React, { Fragment, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffectOnce } from "react-use"
 import { HomeTemplateProps } from "./HomeTemplate.props"
 import Navbar from "@organisms/Navbar"
 import { useRouter } from "next/router"
 import ProductSection from "@organisms/ProductSection"
-
-
 
 
 const HomeTemplate: React.FC<HomeTemplateProps> = () => {
@@ -63,11 +56,11 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
 
   const hasMore = rdxProductsState.page < 4
 
-
   return (
     <React.Fragment>
       <Navbar drawerOpen={isDrawerOpen} onCartClick={_handleCartClick} onDrawerClose={_handleDrawerClose} />
       <ProductSection hasMore={hasMore} onLoadMore={_handleNext} onCartClick={_handleCartProductClick} products={products} />
+
     </React.Fragment>
   )
 }

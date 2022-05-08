@@ -45,7 +45,7 @@ const fetchProductDetail = createAsyncThunk(
     try {
       const response = await productDetailNetwork(id)
       return {
-        detailProduct: response.data.data,
+        detailProduct: response.data.data.product,
       }
     } catch (err) {
       return {
@@ -92,7 +92,10 @@ const productSlice = createSlice({
       state.detailLoading = true
     },
     [`${fetchProductDetail.fulfilled}`]: (state, action) => {
-      const newDetailsProduct = [...state.detailProducts, action.payload.detailProduct]
+      const productPayload = action.payload.detailProduct
+      const finnedProductDetail = state.detailProducts.findIndex((prod) => prod.id === productPayload.id)
+      const newDetailsProduct = finnedProductDetail < 0 ? [...state.detailProducts, productPayload] : state.detailProducts
+
       return {
         ...state,
         detailProducts: newDetailsProduct,

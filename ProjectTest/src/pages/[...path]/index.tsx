@@ -19,6 +19,7 @@ import { screenSelector } from '@rdxFeatures/screen'
 import { Thumbs } from 'swiper'
 import Icon from '@atoms/Icon'
 import CartIcon from '@assets/svg/Cart.svg'
+import ProductDetailSection from '@organisms/ProductDetailSection'
 
 type Props = {
   id?: any,
@@ -55,12 +56,9 @@ const DetailProductPage = (props: Props) => {
   const router = useRouter()
   const isMobile = useSelector(screenSelector.isMobile)
 
-  const [swiper, setSwiper] = useState<any>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
   const rdxProductsState = useSelector(rdxProductSelector.rdxProductState)
   const rdxProductWithCartQuantity = useSelector(rdxProductSelector.getAllProductWithCartQuantity)
   const products = rdxProductWithCartQuantity.filter(product => product.id !== props.id)
-  const product = rdxProductWithCartQuantity.find(product => product.id === props.id)
 
   const dispatch = useDispatch()
 
@@ -90,16 +88,10 @@ const DetailProductPage = (props: Props) => {
     }, 1000) // to fast for fetch
   }
 
-
-  const _handleChangeIndex = (index: number) => {
-    setActiveIndex(index)
-    swiper.slideTo(index)
+  const _handleCartProductDetailClick = () => {
+    setIsDrawerOpen(false)
   }
 
-  const _handleCartProductDetailClick = (product: ProductListEntity) => {
-    setIsDrawerOpen(true)
-    dispatch(rdxCartActions.setProductList(product))
-  }
 
   const hasMore = rdxProductsState.page < 4
   const IMAGE_HEIGHT = useMemo(() => isMobile ? 520 : 580, [isMobile])
@@ -123,58 +115,8 @@ const DetailProductPage = (props: Props) => {
           </Swiper>
         </div>
       )}
-      
-      <Container className='laptop:mb-20 mobile:mb-10'>
-        <div className='flex gap-x-8 laptop:flex-row mobile:flex-col'>
-          {!isMobile && (
-            <div className='flex gap-x-4'>
-              <ul className='flex flex-col gap-y-4'>
-                {props.data.images.map(((src, picIndex) => (
-                  <li onClick={() => _handleChangeIndex(picIndex)} key={`${props.data.id}-${picIndex}-thumb`} className={`${picIndex === activeIndex ? "ring-2 ring-black " : ""} z-0  rounded-sm cursor-pointer`}>
-                    <Image src={src} alt="" layout='fixed' height={64} width={64} className='object-cover z-10' />
-                  </li>
-                )))}
-              </ul>
-              <div style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }}>
-                <Swiper
-                  spaceBetween={0} slidesPerView={1} pagination={{
-                    clickable: true
-                  }}
-                  onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                  onSwiper={setSwiper}
-                  className="w-full h-full bg-gray-200">
-                  {props.data.images.map((pic, picIndex) => (
-                    <SwiperSlide key={`${props.data.id}-${picIndex}`} className="z-0">
-                      <Image src={pic} alt="" layout='fill' className='object-cover z-10' />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-          )}
-          <div className='flex flex-col gap-y-4 mobile:py-4'>
-            <div>
-              <h1 className='text-lg font-medium'>{props.data.name}</h1>
-              <div className='flex gap-x-2 text-sm text-gray-400'>
-                <span>ID : {props.data.id}</span>
-                <span>Stock : {props.data.stock}</span>
-                <span>SKU : {props.data.sku}</span>
-              </div>
-              <h2 className='text-2xl'>{moneyFormatter(props.data.price)}</h2>
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <span className='font-medium underline'>Detail</span>
-              <article className='prose' dangerouslySetInnerHTML={{ __html: props.data.description }} />
-            </div>
 
-            <button onClick={() => _handleCartProductDetailClick(product)} className='flex justify-between p-3 border rounded bg-white active:scale-[.98] hover:border-black transition-all duration-50 ease-out'>
-              <span className='font-medium'>{product?.quantity > 0 ? "Add more" : "Add to cart"}</span>
-              <Icon src={CartIcon} badge={product?.quantity} />
-            </button>
-
-          </div>
-        </div>
-      </Container>
+      <ProductDetailSection data={props.data} onCartClick={_handleCartProductDetailClick} />
 
       <ProductSection
         hasMore={hasMore}
