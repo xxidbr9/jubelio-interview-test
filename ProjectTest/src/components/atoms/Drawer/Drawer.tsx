@@ -18,7 +18,7 @@ const Drawer: React.FC<DrawerProps> = ({ header, children, open, onClose }) => {
     >
       <section
         className={
-          " w-screen max-w-sm right-0 absolute bg-white h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
+          " w-screen max-w-sm right-0 absolute z-50 bg-white h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
           (open ? " translate-x-0 " : " translate-x-full ")
         }
       >
@@ -34,13 +34,13 @@ const Drawer: React.FC<DrawerProps> = ({ header, children, open, onClose }) => {
         </article>
       </section>
       <section
-        className={`w-screen h-full cursor-pointer bg-gray-900 bg-opacity-25` +
+        className={`w-screen h-full cursor-pointer bg-gray-900 bg-opacity-25 duration-200 transition-all ` +
           (open
-            ? " transition-opacity opacity-100 duration-200 "
-            : " transition-all delay-200 opacity-0 ")
+            ? " transition-opacity opacity-100 "
+            : " delay-200 opacity-0 ")
         }
         onClick={onClose}
-      ></section>
+      />
     </main>
   );
 }
