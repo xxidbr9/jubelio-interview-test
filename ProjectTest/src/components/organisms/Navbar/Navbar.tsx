@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         </Drawer>
       )}
 
-      <div className="laptop:pt-28 mobile:pt-16" />
+      <div className="laptop:pt-20 mobile:pt-16" />
     </React.Fragment>
   )
 }

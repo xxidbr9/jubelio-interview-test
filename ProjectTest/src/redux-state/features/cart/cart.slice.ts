@@ -1,5 +1,6 @@
 import { ProductListEntity } from "@domain/product/entities/iProductList.entity";
 import { createSlice } from "@reduxjs/toolkit";
+import { sortBy } from "lodash";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -55,6 +56,32 @@ const cartSlice = createSlice({
 
       state.products.splice(finnedIndexProduct, 1);
 
+      // return not necessary
+      return state
+    },
+    sortBy(state, action: { payload: { sort: "price" | "name", order: "desc" | "asc" }, type: string }) {
+      switch (action.payload.sort) {
+        case "price": {
+          if (action.payload.order === "asc") {
+            state.products.sort((a, b) => a.price - b.price)
+          } else if (action.payload.order === "desc") {
+            state.products.sort((a, b) => b.price - a.price)
+          }
+        }
+        case "name": {
+          if (action.payload.order === "asc") {
+            state.products.sort((a, b) => {
+              if (a.name > b.name) {
+                return -1;
+              } else if (b.name > a.name) {
+                return 1;
+              }
+              return 0;
+            })
+          }
+        }
+      }
+      
       // return not necessary
       return state
     }

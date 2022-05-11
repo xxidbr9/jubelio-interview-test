@@ -33,10 +33,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, otherProducts,
   const IMAGE_RATIO = 4 / 3
   const IMAGE_HEIGHT = IMAGE_WIDTH * IMAGE_RATIO
 
-  useEffect(() => {
-    console.log(rdxProductDetail)
-  }, [rdxProductDetail])
-
   let [isOpen, setIsOpen] = useState(false)
 
   const dispatch = useDispatch()
@@ -88,9 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data: product, otherProducts,
         <div className='px-2 border-t py-2 flex flex-col justify-between flex-1 gap-2 bg-gray-50 relative'>
           <a href={product.slug} onClick={_handleLinkEvent} >
             <div className="absolute w-full h-full z-10" />
-            <span className='font-medium'>
-              {product.name}
-            </span>
+            <span className='font-medium' dangerouslySetInnerHTML={{ __html: product.name }} />
           </a>
           <div className='flex flex-col gap-y-4 relative z-20'>
             <span className='font-normal text-gray-600'>{moneyFormatter(product.price)}</span>

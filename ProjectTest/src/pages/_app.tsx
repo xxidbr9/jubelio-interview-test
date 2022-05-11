@@ -25,7 +25,7 @@ import SwiperCore, {
 import moment from 'moment'
 import 'moment/locale/id'
 import NProgress from 'nextjs-progressbar'
-import { persistor, wrapper } from '@redux-state/index'
+import { persistor, runReduxSaga, wrapper } from '@redux-state/index'
 import Meta from '@atoms/Meta'
 import { breakScreen } from '@styles/breakpoint'
 import colors from '@styles/colors'
@@ -51,7 +51,6 @@ const MainApp = ({ Component, pageProps }) => {
 
   const dispatch = useDispatch()
   const screen = useScreen()
-
   useEffect(() => {
     dispatch(screenAction.setScreenSize(screen as ScreenType))
   }, [screen, dispatch])

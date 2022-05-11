@@ -3,9 +3,12 @@ import { ProductListEntity } from "@domain/product/entities/iProductList.entity"
 import productDetailNetwork from "@domain/product/network/productDetail.network"
 import productListNetwork, { IProductListParams } from "@domain/product/network/productList.network"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import colors from "@styles/colors"
 
 type RdxProductState = {
   products?: ProductListEntity[]
+  searchProducts?: ProductListEntity[],
+  searchQuery?: string,
   detailProduct?: ProductDetailEntity
   page?: number
   loading?: boolean
@@ -17,6 +20,7 @@ type RdxProductState = {
 
 const initialState: RdxProductState = {
   products: [],
+  searchProducts: [],
   page: 0,
   loading: true,
   detailLoading: true,
@@ -67,10 +71,65 @@ const productSlice = createSlice({
         products: newProductList
       }
     },
+
+    setSearchProductQuery(state, action: { payload: RdxProductState, type: string }) {
+      const searchQuery = action.payload.searchQuery
+      return {
+        ...state,
+        searchQuery,
+      }
+    },
     setDetailActiveIndex(state, action: { payload: RdxProductState, type: string }) {
       return {
         ...state,
         detailActiveIndex: action.payload.detailActiveIndex
+      }
+    },
+    setLoading(state, action: { payload: RdxProductState, type: string }) {
+      return {
+        ...state,
+        loading: action.payload.loading
+      }
+    },
+    setSearchProductListSaga(state, action: { payload: RdxProductState, type: string }) {
+      return {
+        ...state,
+        searchProducts: action.payload.searchProducts
+      }
+    },
+    sortBy(state, action: { payload: { sort: "price" | "name", order: "desc" | "asc" }, type: string }) {
+      switch (action.payload.sort) {
+        case "price": {
+          if (action.payload.order === "asc") {
+            state.products.sort((a, b) => a.price - b.price)
+          } else if (action.payload.order === "desc") {
+            state.products.sort((a, b) => b.price - a.price)
+          }
+          return state
+        }
+
+        case "name": {
+          if (action.payload.order === "asc") {
+            state.products.sort((a, b) => {
+              if (a.name < b.name) return -1;
+              if (a.name > b.name) return 1;
+              return 0
+            })
+            return state
+
+
+          } else if (action.payload.order === "desc") {
+            state.products.sort((a, b) => {
+              if (a.name < b.name) return 1;
+              if (a.name > b.name) return -1;
+              return 0
+            })
+            return state
+          }
+        }
+
+        default:
+          return state
       }
     }
   },

@@ -1,4 +1,4 @@
 import { rdxProductThunkActions, rdxProductReducer, rdxProductActions } from "./product.slice";
 import * as rdxProductSelector from "./product.selector";
-
-export { rdxProductThunkActions, rdxProductReducer, rdxProductActions, rdxProductSelector };
+import rdxProductSagas from './product.saga'
+export { rdxProductSagas, rdxProductThunkActions, rdxProductReducer, rdxProductActions, rdxProductSelector };
