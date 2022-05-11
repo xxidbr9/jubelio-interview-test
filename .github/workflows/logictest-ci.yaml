@@ -12,16 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Setup Nodejs
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.x
+      - name: Setup Nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
 
-    - run: npm install -g yarn
-    
-    - run: |
-        cd LogicTest
-        yarn
-        yarn test:coverage
+      - run: npm install -g yarn
+
+      - name: Running test
+        run: |
+          cd LogicTest
+          yarn
+          yarn test:coverage
