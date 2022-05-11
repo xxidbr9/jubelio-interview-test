@@ -131,6 +131,7 @@ const productSlice = createSlice({
         default:
           return state
       }
+
     }
   },
   extraReducers: {

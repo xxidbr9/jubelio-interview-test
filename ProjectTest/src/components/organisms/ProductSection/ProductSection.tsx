@@ -53,7 +53,7 @@ const ProductSection = (props: Props) => {
                 <React.Fragment>
                   <Menu.Button className={`flex items-center rounded-full border py-2  gap-3 px-4 ${open && "shadow-md"} hover:shadow-md transition-all duration-150`}>
                     <span>
-                      Filter
+                      Sorting
                     </span>
                     <FilterIcon />
                   </Menu.Button>

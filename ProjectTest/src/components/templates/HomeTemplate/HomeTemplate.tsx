@@ -25,9 +25,9 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
   const rdxProductsState = useSelector(rdxProductSelector.rdxProductState)
   const rdxProductWithCartQuantity = useSelector(rdxProductSelector.getAllProductWithCartQuantity)
   const rdxSearchProductWithCartQuantity = useSelector(rdxProductSelector.getAllSearchProductWithCartQuantity)
+  const isSearchProduct = rdxSearchProductWithCartQuantity.length > 0 && rdxSearchProductWithCartQuantity.length !== rdxProductWithCartQuantity.length
 
-  const products = useMemo(() => rdxSearchProductWithCartQuantity.length > 0 ? rdxSearchProductWithCartQuantity : rdxProductWithCartQuantity, [rdxSearchProductWithCartQuantity, rdxProductWithCartQuantity])
-
+  const products = isSearchProduct ? rdxSearchProductWithCartQuantity : rdxProductWithCartQuantity
 
   const dispatch = useDispatch()
 
@@ -73,8 +73,8 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
     debouncedSearchInput(input.target.value)
     dispatch(rdxProductActions.setLoading({ loading: true }))
   }
-
-  const hasMore = rdxSearchProductWithCartQuantity.length > 0 ? false : rdxProductsState.page < 4
+  
+  const hasMore = isSearchProduct ? false : rdxProductsState.page < 4
 
   return (
     <React.Fragment>

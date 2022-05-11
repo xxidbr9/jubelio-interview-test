@@ -23,13 +23,13 @@ function* setSearchProductListSaga() {
   yield put({ type: rdxProductActions.setSearchProductListSaga.type, payload: { searchProducts: newSearchProductList } });
 }
 
-function* actionWatcher() {
+function* searchQueryWatcher() {
   yield takeLatest(rdxProductActions.setSearchProductQuery.type, setSearchProductListSaga)
 }
 
 
 export default function* rootSaga() {
   yield all([
-    actionWatcher(),
+    searchQueryWatcher(),
   ]);
 }
