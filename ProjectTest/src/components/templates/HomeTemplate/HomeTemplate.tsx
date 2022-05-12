@@ -73,9 +73,9 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
     debouncedSearchInput(input.target.value)
     dispatch(rdxProductActions.setLoading({ loading: true }))
   }
-  
-  const hasMore = isSearchProduct ? false : rdxProductsState.page < 4
 
+  const hasMore = isSearchProduct ? false : rdxProductsState.page < 4
+  const isLoading = rdxProductsState.loading && !rdxProductWithCartQuantity.length
   return (
     <React.Fragment>
       <Navbar drawerOpen={isDrawerOpen} onCartClick={_handleCartClick} onDrawerClose={_handleDrawerClose} />
@@ -83,8 +83,8 @@ const HomeTemplate: React.FC<HomeTemplateProps> = () => {
       <Container className="mt-4">
         <SearchInput placeholder='Find a product eg: IPhone' onChange={_handleSearch} />
       </Container>
-      {rdxProductsState.loading && <Loader />}
-      {!rdxProductsState.loading && (
+      {isLoading && <Loader />}
+      {!isLoading && (
         <ProductSection
           hasMore={hasMore}
           onLoadMore={_handleNext}
